@@ -6,3 +6,8 @@ cards.forEach(card => {
     alert(title + " clicked");
   });
 });
+
+function goToOrderForm() {
+  window.location.href = "order.html";
+}
+
