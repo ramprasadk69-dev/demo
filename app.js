@@ -7,7 +7,5 @@ cards.forEach(card => {
   });
 });
 
-function goToOrderForm() {
-  window.location.href = "order.html";
-}
+
 
