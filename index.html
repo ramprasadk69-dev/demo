@@ -1,37 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deals SmartShoppingHub</title>
-<link rel="stylesheet" href="styles.css">
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartShoppingHub</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-<header class="navbar">
-  <div class="logo">SmartShoppingHub</div>
-  <nav>
-    <a href="#">Home</a>
-    <a href="#">Deals</a>
-    <a href="#">Track</a>
-    <a href="#">Refund</a>
-    <a href="#">Login</a>
-  </nav>
-</header>
+  <div class="container">
+    <h1>Welcome</h1>
+    <p class="subtitle">SELECT AN OPTION</p>
 
-<section class="hero">
-  <h1>Welcome to Deals SmartShoppingHub</h1>
-  <input type="search" id="search" placeholder="Search deals...">
-</section>
+    <div class="grid">
 
-<section class="cards-container" id="dealsList">
-  <!-- Deals will be injected here -->
-</section>
+      <div class="card blue">
+        <div class="icon"><i class="fas fa-shopping-cart"></i></div>
+        <h2>Order Form</h2>
+        <p>Submit new orders</p>
+      </div>
 
-<footer class="footer">
-  <p>© 2026 SmartShoppingHub</p>
-</footer>
+      <div class="card green">
+        <div class="icon"><i class="fas fa-undo"></i></div>
+        <h2>Refund Forms</h2>
+        <p>Refund Forms</p>
+      </div>
+
+      <div class="card orange">
+        <span class="badge">LIVE</span>
+        <div class="icon"><i class="fas fa-fire"></i></div>
+        <h2>Deals</h2>
+        <p>Hot offers</p>
+      </div>
+
+      <div class="card purple">
+        <div class="icon"><i class="fas fa-truck"></i></div>
+        <h2>Track Status</h2>
+        <p>Check order location</p>
+      </div>
+
+      <div class="card cyan">
+        <div class="icon"><i class="fas fa-user"></i></div>
+        <h2>Buyer Login</h2>
+      </div>
+
+      <div class="card teal">
+        <div class="icon"><i class="fas fa-handshake"></i></div>
+        <h2>Mediator Login</h2>
+      </div>
+
+    </div>
+  </div>
 
 <script src="app.js"></script>
 </body>
