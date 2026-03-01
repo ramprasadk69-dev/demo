@@ -127,6 +127,55 @@ h1 {
   font-weight: bold;
 }
 
+/* FORM PAGE */
+
+.form-wrapper {
+  max-width: 700px;
+  margin: 30px auto;
+}
+
+.info-banner {
+  background: #d4f8e8;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.info-banner span {
+  color: green;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form-card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.step-number {
+  background: #eee;
+  border-radius: 50%;
+  padding: 5px 10px;
+  margin-right: 10px;
+}
+
+.reset {
+  margin-left: auto;
+  font-size: 12px;
+  color: red;
+  cursor: pointer;
+}
+
+
 /* Colors */
 .blue { background: #3a86ff; }
 .green { background: #06d6a0; }
@@ -140,6 +189,7 @@ h1 {
   h1 { font-size: 32px; }
   .card { text-align: center; align-items: center; }
 }
+
 
 
 
