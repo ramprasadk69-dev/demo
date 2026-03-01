@@ -1,1 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Form</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+  
+<body>
+<header class="topbar">
+  <div class="logo">🛒 Portal</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#">Dashboard</a>
+    <a href="#">Refund Form</a>
+    <button class="login-btn">Login</button>
+  </nav>
+</header>
+
+<div class="form-wrapper">
+
+  <div class="info-banner">
+    Login / Create account on portal for more benefits and detailed order status.
+    <span>Click here</span>
+  </div>
+
+  <div class="form-card">
+
+    <div class="step">
+      <span class="step-number">1</span>
+      <h3>Select Product</h3>
+      <a class="reset">Reset</a>
+    </div>
+
+    <label>Search Product Code *</label>
+    <select>
+      <option>Select product...</option>
+    </select>
+
+    <div class="step">
+      <span class="step-number">2</span>
+      <h3>Order Details</h3>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <label>Email *</label>
+        <input type="email">
+      </div>
+      <div>
+        <label>Reviewer Name *</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <label>Whatsapp No. *</label>
+    <input type="text" placeholder="10-digit mobile number">
+
+    <label>Select Order Type</label>
+    <div class="radio-group">
+      <label><input type="radio" name="type"> Fresh Order</label>
+      <label><input type="radio" name="type"> Replacement</label>
+    </div>
+
+    <label>New Order ID *</label>
+    <input type="text" placeholder="Paste Order ID here">
+
+    <div class="grid-3">
+      <div>
+        <label>Order Date *</label>
+        <input type="text" placeholder="mm/dd/yyyy">
+      </div>
+      <div>
+        <label>Total (₹)</label>
+        <input type="text">
+      </div>
+      <div>
+        <label>Legit (₹)</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <label>Deal Type *</label>
+    <select>
+      <option>Mediator</option>
+    </select>
+
+    <label>Mediator *</label>
+    <select>
+      <option>Loading...</option>
+    </select>
+
+    <label>Screenshot *</label>
+    <div class="upload-box">Tap to Upload</div>
+
+    <label class="checkbox">
+      <input type="checkbox"> I confirm details are correct.
+    </label>
+
+    <button class="submit-btn">Submit Order ✈</button>
+
+  </div>
+</div>
+
+</body>
+</html>
 
