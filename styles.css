@@ -19,6 +19,22 @@ body {
   max-width: 1200px;
 }
 
+.topbar {
+  background: #4b0082;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 30px;
+  align-items: center;
+}
+
+.topbar nav a {
+  color: white;
+  margin: 0 10px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
 h1 {
   font-size: 42px;
   color: #1d3557;
@@ -104,3 +120,4 @@ h1 {
   h1 { font-size: 32px; }
   .card { text-align: center; align-items: center; }
 }
+
