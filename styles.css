@@ -7,7 +7,6 @@
 
 body {
   background: #f5f7fb;
-  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -302,6 +301,7 @@ input, select {
     font-size: 14px;
   }
 }
+
 
 
 
