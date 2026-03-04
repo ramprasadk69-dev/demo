@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Form - Shopping</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    #form-details {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .product-info-box {
+      display: none;
+      background: #f0f7ff;
+      border: 1.5px solid #90caf9;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #1565c0;
+    }
+
+    .product-info-box.show { display: flex; align-items: center; gap: 12px; }
+    .product-info-box .pi-icon { font-size: 26px; }
+    .product-info-box .pi-name { font-weight: 700; font-size: 15px; color: #1a237e; }
+    .product-info-box .pi-meta { font-size: 12px; color: #555; margin-top: 2px; }
+
+    .select-hint {
+      text-align: center;
+      padding: 32px 20px;
+      color: #bbb;
+      font-size: 14px;
+    }
+    .select-hint .hint-icon { font-size: 44px; margin-bottom: 12px; }
+    .select-hint .hint-text { font-weight: 500; }
+
+    .required-star { color: #e53935; margin-left: 3px; }
+
+    select.form-select {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      background: #fafafa;
+      color: #333;
+      transition: border 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    select.form-select:focus {
+      border-color: #3949ab;
+      box-shadow: 0 0 0 3px rgba(57,73,171,0.10);
+      background: white;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">Deals</div>
+      <div>
+        <div class="navbar-title">Shopping Deals</div>
+        <div class="navbar-subtitle">Deal Portal</div>
+      </div>
+    </a>
+    <a href="index.html" class="navbar-back">← Back</a>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="card card-wide">
+
+      <div><label class="page-title">📋 Order Form</label></div>
+      <div class="divider"></div>
+      <div class="page-subtitle">Fill in the details below to submit a new deal order</div>
+
+      <form onsubmit="handleSubmit(event)">
+
+        <!-- PRODUCT SELECT (always visible) -->
+        <div class="form-group">
+          <label for="product_code_select">Select Product <span class="required-star">*</span></label>
+          <select class="form-select" id="product_code_select" onchange="onProductSelect(this)" required>
+            <option value="" disabled selected>--- Select Product ---</option>
+            <option value="AB_Pro_ANC_Buds"
+              data-brand="AB"
+              data-platform="Amazon"
+              data-link="https://amzn.to/45sYH47"
+              data-deal="Review"
+              data-price="200">
+              Ear Buds
+            </option>
+            <option value="Alyne_high_waist_legging_Az"
+              data-brand="Alyne"
+              data-platform="Amazon"
+              data-link="https://amzn.to/49X2Akz"
+              data-deal="Review"
+              data-price="20">
+              Phone
+            </option>
+          </select>
+        </div>
+
+        <!-- PRODUCT INFO CARD (shows after selection) -->
+        <div class="product-info-box" id="product-info">
+          <div class="pi-icon">🛍️</div>
+          <div>
+            <div class="pi-name" id="pi-name">-</div>
+            <div class="pi-meta" id="pi-meta">-</div>
+          </div>
+        </div>
+
+        <!-- HINT when nothing selected -->
+        <div class="select-hint" id="select-hint">
+          <div class="hint-icon">☝️</div>
+          <div class="hint-text">Please select a product above to fill the order details</div>
+        </div>
+
+        <!-- REMAINING FORM (hidden until product selected) -->
+        <div id="form-details">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Deal Type <span class="required-star">*</span></label>
+              <input type="text" id="deal-deal" placeholder="" min="1" required/>
+            </div>
+            <div class="form-group">
+              <label>Platform <span class="required-star">*</span></label>
+              <input type="text" id="deal-platform" placeholder="" min="1" required/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Buyer Name <span class="required-star">*</span></label>
+              <input type="text" placeholder="Enter full name" required/>
+            </div>
+            <div class="form-group">
+              <label>Buyer Phone / WhatsApp <span class="required-star">*</span></label>
+              <input type="tel" placeholder="+91 XXXXX XXXXX" required/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Seller Name <span class="required-star">*</span></label>
+              <input type="text" placeholder="Enter seller's full name" required/>
+            </div>
+            <div class="form-group">
+              <label>Seller Phone / WhatsApp <span class="required-star">*</span></label>
+              <input type="tel" placeholder="+91 XXXXX XXXXX" required/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Deal Amount (₹) <span class="required-star">*</span></label>
+              <input type="number" id="deal-amount" placeholder="0.00" min="1" required/>
+            </div>
+            <div class="form-group">
+              <label>Order Type <span class="required-star">*</span></label>
+              <select required>
+                <option value="">Select type...</option>
+                <option>Product Deal</option>
+                <option>Service Deal</option>
+                <option>Property Deal</option>
+                <option>Vehicle Deal</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Product / Service Description <span class="required-star">*</span></label>
+            <textarea placeholder="Describe the product or service being traded in detail..." required></textarea>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Mediator Name</label>
+              <input type="text" placeholder="Leave blank if none"/>
+            </div>
+            <div class="form-group">
+              <label>Expected Delivery Date</label>
+              <input type="date"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Delivery Address</label>
+            <textarea placeholder="Full delivery address..." style="min-height:70px;"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Additional Notes / Terms</label>
+            <textarea placeholder="Any special terms, conditions, or notes for this deal..."></textarea>
+          </div>
+
+          <div class="alert alert-info">
+            <span>ℹ️</span>
+            <span>After submission, our team will contact you within 24 hours to confirm your order.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block">Submit Order →</button>
+
+        </div>
+        <!-- end #form-details -->
+
+      </form>
+    </div>
+  </div>
+
+  <div class="page-footer">© 2026 Jayshakthi Marketing</div>
+
+  <script>
+    function onProductSelect(selectEl) {
+      const selected = selectEl.options[selectEl.selectedIndex];
+      const value = selectEl.value;
+
+      if (!value) return;
+
+      // Show product info card
+      document.getElementById('product-info').classList.add('show');
+      document.getElementById('pi-name').textContent = selected.text;
+      document.getElementById('pi-meta').textContent =
+        `Brand: ${selected.dataset.brand}  |  Platform: ${selected.dataset.platform}  |  Deal: ${selected.dataset.deal}  |  Price: ₹${selected.dataset.price}`;
+
+      // Pre-fill deal amount
+      if (selected.dataset.price) {
+        document.getElementById('deal-amount').value = selected.dataset.price;
+      }
+      if (selected.dataset.deal) {
+        document.getElementById('deal-deal').value = selected.dataset.deal;
+      }
+      if (selected.dataset.platform) {
+        document.getElementById('deal-platform').value = selected.dataset.platform;
+      }
+
+      // Hide hint, show form
+      document.getElementById('select-hint').style.display = 'none';
+      document.getElementById('form-details').style.display = 'block';
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('✅ Order submitted successfully!\n\nOur team will contact you within 24 hours to confirm your deal.');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

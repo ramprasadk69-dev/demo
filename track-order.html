@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Track Order - Shopping</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .search-bar { display: flex; gap: 10px; margin-bottom: 24px; }
+    .search-bar input { flex: 1; }
+    .search-bar .btn { white-space: nowrap; padding: 12px 20px; }
+    .order-summary {
+      background: #f5f6ff;
+      border: 1.5px solid #c5cae9;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 24px;
+    }
+    .os-row { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px; }
+    .os-left .os-id { font-size: 14px; font-weight: 700; color: #1a237e; margin-bottom: 4px; }
+    .os-left .os-desc { font-size: 13px; color: #555; }
+    .os-right .os-amount { font-size: 20px; font-weight: 700; color: #1a237e; }
+    .os-right .os-date { font-size: 11px; color: #aaa; text-align: right; }
+    .os-meta { display: flex; gap: 20px; margin-top: 12px; flex-wrap: wrap; }
+    .os-meta-item { font-size: 12px; color: #777; }
+    .os-meta-item strong { color: #333; }
+    #result-section { display: none; }
+    .not-found { text-align: center; padding: 30px; }
+    .not-found .nf-icon { font-size: 48px; margin-bottom: 12px; }
+    .popular-ids { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+    .popular-id {
+      padding: 6px 12px; border-radius: 20px; border: 1.5px solid #c5cae9;
+      font-size: 12px; color: #3949ab; cursor: pointer; font-weight: 600;
+      background: #f5f6ff; transition: all 0.2s;
+    }
+    .popular-id:hover { background: #3949ab; color: white; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">Deals</div>
+      <div>
+        <div class="navbar-title">Shopping Deals</div>
+        <div class="navbar-subtitle">Deal Portal</div>
+      </div>
+    </a>
+    <a href="index.html" class="navbar-back">← Back</a>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="card card-wide" style="max-width:520px;">
+      <div class="page-title">🔍 Track Your Order</div>
+      <div class="divider"></div>
+      <div class="page-subtitle">Enter your Order ID to see the current status</div>
+
+      <div class="search-bar">
+        <input type="text" id="order-id-input" placeholder="e.g. JSM-2026-00145" />
+        <button class="btn btn-green" onclick="trackOrder()">Track</button>
+      </div>
+
+      <div style="font-size:12px;color:#aaa;margin-bottom:12px;">Try a sample order:</div>
+      <div class="popular-ids">
+        <span class="popular-id" onclick="fillAndTrack('JSM-2026-00145')">JSM-2026-00145</span>
+        <span class="popular-id" onclick="fillAndTrack('JSM-2026-00138')">JSM-2026-00138</span>
+        <span class="popular-id" onclick="fillAndTrack('JSM-2026-00152')">JSM-2026-00152</span>
+      </div>
+
+      <div id="result-section">
+        <div class="order-summary">
+          <div class="os-row">
+            <div class="os-left">
+              <div class="os-id">#JSM-2026-00145</div>
+              <div class="os-desc">📦 Electronics — Samsung TV 55"</div>
+            </div>
+            <div class="os-right">
+              <div class="os-amount">₹42,500</div>
+              <div class="os-date">01 Mar 2026</div>
+            </div>
+          </div>
+          <div class="os-meta">
+            <div class="os-meta-item"><strong>Buyer:</strong> Ravi Kumar</div>
+            <div class="os-meta-item"><strong>Seller:</strong> Suresh M.</div>
+            <div class="os-meta-item"><strong>Mediator:</strong> Arun V.</div>
+          </div>
+        </div>
+
+        <div class="track-steps">
+          <div class="track-step">
+            <div class="step-dot step-done">✅</div>
+            <div class="step-body">
+              <div class="step-title">Order Placed</div>
+              <div class="step-time">01 Mar 2026, 10:30 AM</div>
+            </div>
+          </div>
+          <div class="track-step">
+            <div class="step-dot step-done">✅</div>
+            <div class="step-body">
+              <div class="step-title">Mediator Assigned</div>
+              <div class="step-time">01 Mar 2026, 11:15 AM</div>
+            </div>
+          </div>
+          <div class="track-step">
+            <div class="step-dot step-done">✅</div>
+            <div class="step-body">
+              <div class="step-title">Payment Confirmed</div>
+              <div class="step-time">01 Mar 2026, 2:00 PM</div>
+            </div>
+          </div>
+          <div class="track-step">
+            <div class="step-dot step-active">🚚</div>
+            <div class="step-body">
+              <div class="step-title">In Transit / Processing</div>
+              <div class="step-time">Expected delivery: 06 Mar 2026</div>
+            </div>
+          </div>
+          <div class="track-step">
+            <div class="step-dot step-pending">⬜</div>
+            <div class="step-body">
+              <div class="step-title">Delivered / Completed</div>
+              <div class="step-time">Pending</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top:24px;">
+          <a href="refund-form.html" class="btn btn-outline btn-block">Request Refund for this Order</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page-footer">© 2026 Jayshakthi Marketing</div>
+
+  <script>
+    function trackOrder() {
+      const val = document.getElementById('order-id-input').value.trim();
+      if (!val) { alert('Please enter an Order ID.'); return; }
+      document.getElementById('result-section').style.display = 'block';
+      document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+    }
+    function fillAndTrack(id) {
+      document.getElementById('order-id-input').value = id;
+      trackOrder();
+    }
+  </script>
+</body>
+</html>

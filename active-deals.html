@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Active Deals - Shopping</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .filters { display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .filters select { flex: 1; min-width: 140px; padding: 10px 14px; font-size: 13px; }
+    .filters input { flex: 2; min-width: 180px; padding: 10px 14px; font-size: 13px; }
+    .deals-count { font-size: 13px; color: #888; margin-bottom: 14px; }
+    .deals-count strong { color: #1a237e; }
+    .deal-card-full { background: white; border: 1.5px solid #e0e0e0; border-radius: 14px; padding: 18px; margin-bottom: 14px; transition: box-shadow 0.2s, transform 0.2s; }
+    .deal-card-full:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.09); transform: translateY(-2px); }
+    .deal-row1 { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-wrap: wrap; gap: 6px; }
+    .deal-row2 { font-size: 14px; color: #444; margin-bottom: 4px; }
+    .deal-row3 { font-size: 20px; font-weight: 700; color: #1a237e; margin-bottom: 10px; }
+    .deal-row4 { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .deal-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; background: #f0f4f8; color: #555; }
+    .tag-type { background: #e8eaf6; color: #3949ab; }
+    .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 24px; }
+    .page-btn { width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid #e0e0e0; background: white; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+    .page-btn.active { background: #1a237e; color: white; border-color: #1a237e; }
+    .page-btn:hover:not(.active) { background: #e8eaf6; border-color: #3949ab; }
+    .summary-bar { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+    .summary-item { background: #fafafa; border: 1.5px solid #e0e0e0; border-radius: 12px; padding: 14px; text-align: center; }
+    .summary-num { font-size: 22px; font-weight: 700; color: #1a237e; }
+    .summary-label { font-size: 11px; color: #888; margin-top: 3px; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">Deals</div>
+      <div>
+        <div class="navbar-title">Shopping Deals</div>
+        <div class="navbar-subtitle">Deal Portal</div>
+      </div>
+    </a>
+    <a href="index.html" class="navbar-back">← Back</a>
+  </nav>
+
+  <div class="page-wrapper" style="align-items:flex-start;padding-top:32px;">
+    <div class="card card-wide" style="max-width:640px;">
+      <div class="page-title">🤝 Active Deals</div>
+       <div class="divider"></div>
+      <div class="page-subtitle">All deals currently active on the platform</div>
+
+      <div class="summary-bar">
+        <div class="summary-item">
+          <div class="summary-num">7</div>
+          <div class="summary-label">Total Deals</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-num" style="color:#2e7d32;">4</div>
+          <div class="summary-label">Active</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-num" style="color:#e65100;">2</div>
+          <div class="summary-label">Pending</div>
+        </div>
+      </div>
+
+      <div class="filters">
+        <input type="text" id="search-input" placeholder="🔍  Search by ID, product, or name..." oninput="filterDeals()"/>
+        <select id="type-filter" onchange="filterDeals()">
+          <option value="">All Types</option>
+          <option>Electronics</option>
+          <option>FMCG</option>
+          <option>Property</option>
+          <option>Mobile</option>
+          <option>Vehicle</option>
+        </select>
+        <select id="status-filter" onchange="filterDeals()">
+          <option value="">All Status</option>
+          <option>Active</option>
+          <option>Pending</option>
+          <option>Completed</option>
+        </select>
+      </div>
+
+      <div class="deals-count" id="deals-count">Showing <strong>7</strong> deals</div>
+
+      <div id="deals-container">
+        <div class="deal-card-full" data-type="Electronics" data-status="Active" data-search="samsung tv electronics ravi suresh">
+          <div class="deal-row1">
+            <span style="font-size:12px;color:#888;font-weight:500;">#JSM-2026-00145</span>
+            <span class="badge badge-active">Active</span>
+          </div>
+          <div class="deal-row2">📦 Electronics — Samsung TV 55"</div>
+          <div class="deal-row3">₹42,500</div>
+          <div class="deal-row4">
+            <div class="deal-tags">
+              <span class="tag tag-type">Electronics</span>
+              <span class="tag">Mediator: Arun V.</span>
+              <span class="tag">📅 01 Mar 2026</span>
+            </div>
+            <a href="track-order.html" style="font-size:12px;color:#3949ab;text-decoration:none;font-weight:600;">Track →</a>
+          </div>
+        </div>
+
+        <div class="deal-card-full" data-type="FMCG" data-status="Pending" data-search="fmcg soaps detergents priya kartik">
+          <div class="deal-row1">
+            <span style="font-size:12px;color:#888;font-weight:500;">#JSM-2026-00149</span>
+            <span class="badge badge-pending">Pending</span>
+          </div>
+          <div class="deal-row2">🧴 FMCG — Bulk Soaps & Detergents</div>
+          <div class="deal-row3">₹8,000</div>
+          <div class="deal-row4">
+            <div class="deal-tags">
+              <span class="tag tag-type">FMCG</span>
+              <span class="tag">Mediator: Priya R.</span>
+              <span class="tag">📅 04 Mar 2026</span>
+            </div>
+            <a href="track-order.html" style="font-size:12px;color:#3949ab;text-decoration:none;font-weight:600;">Track →</a>
+          </div>
+        </div>
+
+        <div class="deal-card-full" data-type="Property" data-status="Active" data-search="property 2bhk rental anita dinesh">
+          <div class="deal-row1">
+            <span style="font-size:12px;color:#888;font-weight:500;">#JSM-2026-00152</span>
+            <span class="badge badge-active">Active</span>
+          </div>
+          <div class="deal-row2">🏠 Property — 2BHK Rental Agreement</div>
+          <div class="deal-row3">₹1,20,000</div>
+          <div class="deal-row4">
+            <div class="deal-tags">
+              <span class="tag tag-type">Property</span>
+              <span class="tag">Mediator: Kiran S.</span>
+              <span class="tag">📅 03 Mar 2026</span>
+            </div>
+            <a href="track-order.html" style="font-size:12px;color:#3949ab;text-decoration:none;font-weight:600;">Track →</a>
+          </div>
+        </div>
+
+        <div class="deal-card-full" data-type="Mobile" data-status="Completed" data-search="mobile iphone apple">
+          <div class="deal-row1">
+            <span style="font-size:12px;color:#888;font-weight:500;">#JSM-2026-00140</span>
+            <span class="badge badge-completed">Completed</span>
+          </div>
+          <div class="deal-row2">📱 Mobile — iPhone 15 Pro 256GB</div>
+          <div class="deal-row3">₹95,000</div>
+          <div class="deal-row4">
+            <div class="deal-tags">
+              <span class="tag tag-type">Mobile</span>
+              <span class="tag">Mediator: Arun V.</span>
+              <span class="tag">📅 28 Feb 2026</span>
+            </div>
+            <a href="track-order.html" style="font-size:12px;color:#3949ab;text-decoration:none;font-weight:600;">View →</a>
+          </div>
+        </div>
+
+        <div class="deal-card-full" data-type="Vehicle" data-status="Active" data-search="vehicle bike honda activa">
+          <div class="deal-row1">
+            <span style="font-size:12px;color:#888;font-weight:500;">#JSM-2026-00155</span>
+            <span class="badge badge-active">Active</span>
+          </div>
+          <div class="deal-row2">🏍️ Vehicle — Honda Activa 6G</div>
+          <div class="deal-row3">₹75,000</div>
+          <div class="deal-row4">
+            <div class="deal-tags">
+              <span class="tag tag-type">Vehicle</span>
+              <span class="tag">Mediator: Kiran S.</span>
+              <span class="tag">📅 05 Mar 2026</span>
+            </div>
+            <a href="track-order.html" style="font-size:12px;color:#3949ab;text-decoration:none;font-weight:600;">Track →</a>
+          </div>
+        </div>
+
+        <div class="deal-card-full" data-type="Electronics" data-status="Pending" data-search="laptop dell electronics work">
+          <div class="deal-row1">
+            <span style="font-size:12px;color:#888;font-weight:500;">#JSM-2026-00158</span>
+            <span class="badge badge-pending">Pending</span>
+          </div>
+          <div class="deal-row2">💻 Electronics — Dell Laptop i5 Gen 12</div>
+          <div class="deal-row3">₹55,000</div>
+          <div class="deal-row4">
+            <div class="deal-tags">
+              <span class="tag tag-type">Electronics</span>
+              <span class="tag">Mediator: Priya R.</span>
+              <span class="tag">📅 05 Mar 2026</span>
+            </div>
+            <a href="track-order.html" style="font-size:12px;color:#3949ab;text-decoration:none;font-weight:600;">Track →</a>
+          </div>
+        </div>
+
+        <div class="deal-card-full" data-type="FMCG" data-status="Active" data-search="fmcg rice bulk grains">
+          <div class="deal-row1">
+            <span style="font-size:12px;color:#888;font-weight:500;">#JSM-2026-00161</span>
+            <span class="badge badge-active">Active</span>
+          </div>
+          <div class="deal-row2">🌾 FMCG — Bulk Rice 500kg</div>
+          <div class="deal-row3">₹22,500</div>
+          <div class="deal-row4">
+            <div class="deal-tags">
+              <span class="tag tag-type">FMCG</span>
+              <span class="tag">Mediator: Arun V.</span>
+              <span class="tag">📅 04 Mar 2026</span>
+            </div>
+            <a href="track-order.html" style="font-size:12px;color:#3949ab;text-decoration:none;font-weight:600;">Track →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">›</button>
+      </div>
+
+      <div style="margin-top:20px;">
+        <a href="order-form.html" class="btn btn-primary btn-block">+ Place New Deal Order</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">© 2026 Jayshakthi Marketing</div>
+
+  <script>
+    function filterDeals() {
+      const search = document.getElementById('search-input').value.toLowerCase();
+      const type = document.getElementById('type-filter').value;
+      const status = document.getElementById('status-filter').value;
+      const cards = document.querySelectorAll('.deal-card-full');
+      let count = 0;
+      cards.forEach(card => {
+        const matchType = !type || card.dataset.type === type;
+        const matchStatus = !status || card.dataset.status === status;
+        const matchSearch = !search || card.dataset.search.includes(search) || card.textContent.toLowerCase().includes(search);
+        const show = matchType && matchStatus && matchSearch;
+        card.style.display = show ? 'block' : 'none';
+        if(show) count++;
+      });
+      document.getElementById('deals-count').innerHTML = `Showing <strong>${count}</strong> deal${count !== 1 ? 's' : ''}`;
+    }
+  </script>
+</body>
+</html>

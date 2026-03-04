@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Refund Form - Shopping</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    #form-details {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Order ID input row */
+    .order-id-row {
+      display: flex;
+      gap: 10px;
+      align-items: flex-end;
+    }
+    .order-id-row input { flex: 1; }
+    .order-id-row .btn {
+      white-space: nowrap;
+      padding: 12px 20px;
+      font-size: 14px;
+    }
+
+    /* Order info card */
+    .order-info-box {
+      display: none;
+      background: #f0f7ff;
+      border: 1.5px solid #90caf9;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+    .order-info-box.show { display: block; animation: fadeIn 0.3s ease; }
+    .oib-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
+    .oib-id { font-size: 15px; font-weight: 700; color: #1a237e; }
+    .oib-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .oib-item { font-size: 12px; color: #555; }
+    .oib-item strong { color: #333; display: block; margin-bottom: 2px; }
+
+    /* Hint */
+    .select-hint {
+      text-align: center;
+      padding: 30px 20px;
+      color: #bbb;
+      font-size: 14px;
+    }
+    .select-hint .hint-icon { font-size: 44px; margin-bottom: 12px; }
+    .select-hint .hint-text { font-weight: 500; }
+
+    /* Error state */
+    .order-id-error {
+      display: none;
+      color: #c62828;
+      font-size: 12px;
+      margin-top: 6px;
+      padding: 8px 12px;
+      background: #ffebee;
+      border-radius: 8px;
+      border: 1px solid #ef9a9a;
+    }
+
+    /* Screenshot upload */
+    .upload-area {
+      border: 2px dashed #c5cae9;
+      border-radius: 12px;
+      padding: 28px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fafbff;
+      position: relative;
+    }
+    .upload-area:hover { border-color: #3949ab; background: #f0f2ff; }
+    .upload-area.drag-over { border-color: #3949ab; background: #e8eaf6; }
+    .upload-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+    }
+    .upload-icon { font-size: 36px; margin-bottom: 10px; }
+    .upload-text { font-size: 14px; font-weight: 600; color: #3949ab; margin-bottom: 4px; }
+    .upload-subtext { font-size: 12px; color: #aaa; }
+
+    .preview-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .preview-item {
+      position: relative;
+      width: 90px; height: 90px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid #e0e0e0;
+      background: #f5f5f5;
+    }
+    .preview-item img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-remove {
+      position: absolute; top: 4px; right: 4px;
+      background: rgba(0,0,0,0.6); color: white;
+      border: none; border-radius: 50%;
+      width: 20px; height: 20px; font-size: 11px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+    }
+    .preview-remove:hover { background: #c62828; }
+    .preview-count { font-size: 12px; color: #888; margin-top: 8px; }
+
+    .required-star { color: #e53935; margin-left: 2px; }
+
+    .section-heading {
+      font-size: 13px; font-weight: 700; color: #1a237e; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">Deals</div>
+      <div>
+        <div class="navbar-title">Shopping Deals</div>
+        <div class="navbar-subtitle">Deal Portal</div>
+      </div>
+    </a>
+    <a href="index.html" class="navbar-back">← Back</a>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="card card-wide">
+
+      <div class="page-title">↩️ Refund Form</div>
+      <div class="divider"></div>
+      <div class="page-subtitle">Request a refund for an existing order</div>
+
+      <div class="alert alert-warning">
+        <span>⚠️</span>
+        <span>Refund requests are reviewed within 2–3 business days. Ensure your order ID is correct before submitting.</span>
+      </div>
+
+      <form onsubmit="handleSubmit(event)">
+
+        <!-- ORDER ID (always visible) -->
+        <div class="form-group">
+          <label>Order ID / Deal ID <span class="required-star">*</span></label>
+          <div class="order-id-row">
+            <input type="text" id="order-id-input" placeholder="e.g. JSM-2026-00123" required/>
+            <button type="button" class="btn btn-primary" onclick="lookupOrder()">Find Order</button>
+          </div>
+          <div class="order-id-error" id="order-error">❌ Order ID not found. Please check and try again.</div>
+        </div>
+
+        <!-- ORDER INFO CARD -->
+      <!--  <div class="order-info-box" id="order-info">
+          <div class="oib-header">
+            <span class="oib-id" id="oib-id">-</span>
+            <span class="badge badge-active" id="oib-status">Active</span>
+          </div>
+         <div class="oib-grid">
+            <div class="oib-item"><strong>Product</strong><span id="oib-product">-</span></div>
+            <div class="oib-item"><strong>Amount</strong><span id="oib-amount">-</span></div>
+            <div class="oib-item"><strong>Order Date</strong><span id="oib-date">-</span></div>
+            <div class="oib-item"><strong>Mediator</strong><span id="oib-mediator">-</span></div>
+          </div> 
+        </div> --> 
+
+        <!-- HINT -->
+        <div class="select-hint" id="select-hint">
+          <div class="hint-icon">🔍</div>
+          <div class="hint-text">Enter your Order ID above and click <strong>Find Order</strong> to load refund details</div>
+        </div>
+
+        <!-- FULL FORM (hidden until order found) -->
+        <div id="form-details">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Your Name <span class="required-star">*</span></label>
+              <input type="text" placeholder="Enter your full name" required/>
+            </div>
+            <div class="form-group">
+              <label>Mediator <span class="required-star">*</span></label>
+              <input type="text" placeholder="Enter mediator name" required/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Registered Phone <span class="required-star">*</span></label>
+              <input type="tel" placeholder="+91 XXXXX XXXXX" required/>
+            </div>
+            <div class="form-group">
+              <label>Email <span class="required-star">*</span></label>
+              <input type="email" placeholder="example@mail.com" required/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Order Amount <span class="required-star">*</span></label>
+              <input type="number" id="order-amount" placeholder="0.00" required/>
+            </div>
+            <div class="form-group">
+              <label>Account Name <span class="required-star">*</span></label>
+              <input type="text" placeholder="Enter your account name" required/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Reason for Refund <span class="required-star">*</span></label>
+            <select required>
+              <option value="">Select reason...</option>
+              <option>Product not received</option>
+              <option>Product damaged / defective</option>
+              <option>Deal cancelled by seller</option>
+              <option>Wrong item delivered</option>
+              <option>Quality not as described</option>
+              <option>Duplicate payment</option>
+              <option>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Detailed Description <span class="required-star">*</span></label>
+            <textarea placeholder="Please explain the issue in detail. Include dates, amounts, and any relevant information..." required></textarea>
+          </div>
+
+          <!-- SCREENSHOT UPLOAD -->
+           <div class="form-row">
+          <div class="form-group">
+            <label>Upload Deliverey Screenshot</label>
+            <div class="upload-area" id="upload-area"
+              ondragover="handleDragOver(event)"
+              ondragleave="handleDragLeave(event)"
+              ondrop="handleDrop(event)">
+              <input type="file" id="file-input" accept="image/*" multiple onchange="handleFiles(this.files)"/>
+              <div class="upload-icon">📎</div>
+              <div class="upload-text">Click to upload or drag & drop</div>
+              <div class="upload-subtext">PNG, JPG, JPEG</div>
+            </div>
+            <div class="preview-grid" id="preview-grid"></div>
+            <div class="preview-count" id="preview-count"></div>
+          </div>
+          <div class="form-group">
+            <label>Upload Review Screenshot</label>
+            <div class="upload-area" id="upload-area"
+              ondragover="handleDragOver(event)"
+              ondragleave="handleDragLeave(event)"
+              ondrop="handleDrop(event)">
+              <input type="file" id="file-input" accept="image/*" multiple onchange="handleFiles(this.files)"/>
+              <div class="upload-icon">📎</div>
+              <div class="upload-text">Click to upload or drag & drop</div>
+              <div class="upload-subtext">PNG, JPG, JPEG </div>
+            </div>
+            <div class="preview-grid" id="preview-grid"></div>
+            <div class="preview-count" id="preview-count"></div>
+          </div>
+          </div>
+          <hr class="divider"/>
+          <div class="section-heading">💳 Refund Bank Details</div>
+
+          <div class="form-group">
+            <label>Account Holder Name <span class="required-star">*</span></label>
+            <input type="text" placeholder="Name as on bank account" required/>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bank Account Number <span class="required-star">*</span></label>
+              <input type="text" placeholder="Enter account number" required/>
+            </div>
+            <div class="form-group">
+              <label>IFSC Code <span class="required-star">*</span></label>
+              <input type="text" placeholder="e.g. SBIN0001234" required/>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Bank Name</label>
+              <input type="text" placeholder="e.g. State Bank of India"/>
+            </div>
+            <div class="form-group">
+              <label>UPI ID (optional)</label>
+              <input type="text" placeholder="yourname@upi"/>
+            </div>
+          </div>
+
+          <div class="alert alert-info" style="margin-top:8px;">
+            <span>ℹ️</span>
+            <span>Approved refunds are processed within 5–7 business days to your provided bank account.</span>
+          </div>
+
+          <button type="submit" class="btn btn-orange btn-block">Submit Refund Request →</button>
+
+        </div>
+        <!-- end #form-details -->
+
+      </form>
+    </div>
+  </div>
+
+  <div class="page-footer">© 2026 Jayshakthi Marketing</div>
+
+  <script>
+    // Sample order database
+    const orders = {
+      'JSM-2026-00145': { product: 'Samsung TV 55"', amount: '₹42,500', date: '01 Mar 2026', mediator: 'Arun V.', status: 'Active' },
+      'JSM-2026-00138': { product: 'Bulk Soaps (FMCG)', amount: '₹12,000', date: '22 Feb 2026', mediator: 'Priya R.', status: 'Completed' },
+      'JSM-2026-00152': { product: '2BHK Rental Agreement', amount: '₹1,20,000', date: '03 Mar 2026', mediator: 'Kiran S.', status: 'Active' },
+      'JSM-2026-00121': { product: 'OnePlus 12 5G', amount: '₹28,000', date: '10 Feb 2026', mediator: 'Kiran S.', status: 'Completed' },
+    };
+
+    function lookupOrder() {
+
+     const inputVal = document.getElementById('order-id-input').value.trim().toUpperCase();
+      const errorEl = document.getElementById('order-error');
+      const infoBox = document.getElementById('order-info');
+      const hint = document.getElementById('select-hint');
+      const formDetails = document.getElementById('form-details');
+
+   /*    if (!inputVal) {
+        errorEl.style.display = 'block';
+        errorEl.textContent = '⚠️ Please enter an Order ID first.';
+        infoBox.classList.remove('show');
+        hint.style.display = 'block';
+        formDetails.style.display = 'none';
+        return;
+      }
+
+      const order = orders[inputVal];
+
+      if (!order) {
+        errorEl.style.display = 'block';
+        errorEl.textContent = '❌ Order ID not found. Please check and try again.';
+        infoBox.classList.remove('show');
+        hint.style.display = 'block';
+        formDetails.style.display = 'none';
+        return;
+      } 
+
+      // Found — populate info card
+      errorEl.style.display = 'none';
+      document.getElementById('oib-id').textContent = inputVal;
+      document.getElementById('oib-product').textContent = order.product;
+      document.getElementById('oib-amount').textContent = order.amount;
+      document.getElementById('oib-date').textContent = order.date;
+      document.getElementById('oib-mediator').textContent = order.mediator;
+
+      const statusEl = document.getElementById('oib-status');
+      statusEl.textContent = order.status;
+      statusEl.className = 'badge ' + (order.status === 'Active' ? 'badge-active' : 'badge-completed');
+
+      // Pre-fill order amount
+      document.getElementById('order-amount').value = order.amount.replace(/[₹,]/g, '');
+      */
+    //  infoBox.classList.add('show');
+      hint.style.display = 'none';
+      formDetails.style.display = 'block';
+      formDetails.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Allow pressing Enter in Order ID field
+    document.getElementById('order-id-input').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') { e.preventDefault(); lookupOrder(); }
+    });
+
+    // ---- File upload logic ----
+    let uploadedFiles = [];
+
+    function handleFiles(files) {
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) continue;
+        if (file.size > 5 * 1024 * 1024) { alert(`"${file.name}" exceeds 5MB limit.`); continue; }
+        if (uploadedFiles.length >= 5) { alert('Maximum 5 images allowed.'); break; }
+        uploadedFiles.push(file);
+        renderPreview(file, uploadedFiles.length - 1);
+      }
+      updateCount();
+    }
+
+    function renderPreview(file, index) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const grid = document.getElementById('preview-grid');
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.id = 'preview-' + index;
+        item.innerHTML = `
+          <img src="${e.target.result}" alt="preview"/>
+          <button type="button" class="preview-remove" onclick="removeFile(${index})">✕</button>
+        `;
+        grid.appendChild(item);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function removeFile(index) {
+      uploadedFiles.splice(index, 1);
+      const grid = document.getElementById('preview-grid');
+      grid.innerHTML = '';
+      uploadedFiles.forEach((f, i) => renderPreview(f, i));
+      updateCount();
+    }
+
+    function updateCount() {
+      const el = document.getElementById('preview-count');
+      el.textContent = uploadedFiles.length > 0 ? `${uploadedFiles.length} image${uploadedFiles.length > 1 ? 's' : ''} selected` : '';
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      document.getElementById('upload-area').classList.add('drag-over');
+    }
+    function handleDragLeave() {
+      document.getElementById('upload-area').classList.remove('drag-over');
+    }
+    function handleDrop(e) {
+      e.preventDefault();
+      document.getElementById('upload-area').classList.remove('drag-over');
+      handleFiles(e.dataTransfer.files);
+    }
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('✅ Refund request submitted!\n\nYour request will be reviewed within 2–3 business days. We will contact you on your registered phone number.');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mediator Portal - Shopping</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .portal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+    .user-info { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #1b5e20, #388e3c); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 18px; }
+    .user-name { font-size: 16px; font-weight: 700; color: #1b5e20; }
+    .user-id { font-size: 12px; color: #aaa; }
+    .logout-btn { background: #fff3e0; color: #e65100; border: none; border-radius: 8px; padding: 8px 14px; font-size: 13px; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+    .logout-btn:hover { background: #ffe0b2; }
+    .tab-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .tab { padding: 9px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; border: none; font-family: inherit; transition: all 0.2s; background: #f5f5f5; color: #888; }
+    .tab.active { background: #1b5e20; color: white; }
+    .tab:hover:not(.active) { background: #e8f5e9; color: #1b5e20; }
+    .action-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+    .action-btn { padding: 7px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+    .action-confirm { background: #e8f5e9; color: #2e7d32; }
+    .action-confirm:hover { background: #c8e6c9; }
+    .action-reject { background: #ffebee; color: #c62828; }
+    .action-reject:hover { background: #ffcdd2; }
+    .action-view { background: #e3f2fd; color: #1565c0; }
+    .action-view:hover { background: #bbdefb; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">Deals</div>
+      <div>
+        <div class="navbar-title">Shopping Deals</div>
+        <div class="navbar-subtitle">Mediator Portal</div>
+      </div>
+    </a>
+    <a href="index.html" class="navbar-back">🏠 Home</a>
+  </nav>
+ 
+
+  <div class="page-wrapper" style="align-items:flex-start;padding-top:32px;">
+    <div class="card card-wide" style="max-width:620px;">
+
+      <div class="portal-header">
+        <div class="user-info">
+          <div class="avatar">A</div>
+          <div>
+            <div class="user-name">Arun Venkatesh</div>
+            <div class="user-id">Mediator ID: JSM-M-00014</div>
+          </div>
+        </div>
+        <button class="logout-btn" onclick="window.location.href='index.html'">Logout</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-box stat-green">
+          <div class="stat-num">5</div>
+          <div class="stat-label">Active Deals</div>
+        </div>
+        <div class="stat-box stat-blue">
+          <div class="stat-num">12</div>
+          <div class="stat-label">Completed</div>
+        </div>
+        <div class="stat-box stat-orange">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Pending Action</div>
+        </div>
+      </div>
+
+      <div class="alert alert-warning">
+        <span>⚠️</span>
+        <span><strong>2 deals</strong> require your attention and action.</span>
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab active" onclick="showTab('all', this)">All Deals</button>
+        <button class="tab" onclick="showTab('active', this)">Active</button>
+        <button class="tab" onclick="showTab('pending', this)">Pending</button>
+        <button class="tab" onclick="showTab('completed', this)">Completed</button>
+      </div>
+
+      <div id="tab-all" class="deal-list">
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00145</span><span class="badge badge-active">Active</span></div>
+          <div class="deal-desc">🧑 Buyer: Ravi Kumar → Seller: Suresh M.</div>
+          <div class="deal-desc" style="margin-top:4px;">📦 Electronics — Samsung TV 55"</div>
+          <div class="deal-amount">₹42,500</div>
+          <div class="deal-bottom">
+            <span class="deal-meta">📅 01 Mar 2026</span>
+            <span class="deal-meta">⏳ Expected: 06 Mar</span>
+          </div>
+          <div class="action-row">
+            <button class="action-btn action-confirm">✓ Confirm Delivery</button>
+            <button class="action-btn action-view">View Details</button>
+          </div>
+        </div>
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00149</span><span class="badge badge-pending">Pending</span></div>
+          <div class="deal-desc">🧑 Buyer: Priya S. → Seller: Kartik P.</div>
+          <div class="deal-desc" style="margin-top:4px;">🧴 FMCG — Bulk Soaps & Detergents</div>
+          <div class="deal-amount">₹8,000</div>
+          <div class="deal-bottom">
+            <span class="deal-meta">📅 04 Mar 2026</span>
+          </div>
+          <div class="action-row">
+            <button class="action-btn action-confirm">✓ Approve Deal</button>
+            <button class="action-btn action-reject">✗ Reject</button>
+            <button class="action-btn action-view">View Details</button>
+          </div>
+        </div>
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00152</span><span class="badge badge-pending">Pending</span></div>
+          <div class="deal-desc">🧑 Buyer: Anita R. → Seller: Dinesh K.</div>
+          <div class="deal-desc" style="margin-top:4px;">🏠 Property — 2BHK Rental Agreement</div>
+          <div class="deal-amount">₹1,20,000</div>
+          <div class="deal-bottom">
+            <span class="deal-meta">📅 03 Mar 2026</span>
+          </div>
+          <div class="action-row">
+            <button class="action-btn action-confirm">✓ Approve Deal</button>
+            <button class="action-btn action-reject">✗ Reject</button>
+            <button class="action-btn action-view">View Details</button>
+          </div>
+        </div>
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00138</span><span class="badge badge-completed">Completed</span></div>
+          <div class="deal-desc">🧑 Buyer: Ravi K. → Seller: Meena J.</div>
+          <div class="deal-desc" style="margin-top:4px;">🧴 FMCG Goods — Bulk Soaps</div>
+          <div class="deal-amount">₹12,000</div>
+          <div class="deal-bottom">
+            <span class="deal-meta">📅 Completed: 22 Feb 2026</span>
+            <a href="#" class="deal-link">Archive →</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-active" class="deal-list" style="display:none;">
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00145</span><span class="badge badge-active">Active</span></div>
+          <div class="deal-desc">📦 Samsung TV 55" — Ravi K. → Suresh M.</div>
+          <div class="deal-amount">₹42,500</div>
+          <div class="deal-bottom"><span class="deal-meta">📅 01 Mar 2026</span></div>
+          <div class="action-row"><button class="action-btn action-confirm">✓ Confirm Delivery</button></div>
+        </div>
+      </div>
+
+      <div id="tab-pending" class="deal-list" style="display:none;">
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00149</span><span class="badge badge-pending">Pending</span></div>
+          <div class="deal-desc">🧴 Bulk Soaps — Priya S. → Kartik P.</div>
+          <div class="deal-amount">₹8,000</div>
+          <div class="deal-bottom"><span class="deal-meta">📅 04 Mar 2026</span></div>
+          <div class="action-row"><button class="action-btn action-confirm">✓ Approve</button><button class="action-btn action-reject">✗ Reject</button></div>
+        </div>
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00152</span><span class="badge badge-pending">Pending</span></div>
+          <div class="deal-desc">🏠 2BHK Rental — Anita R. → Dinesh K.</div>
+          <div class="deal-amount">₹1,20,000</div>
+          <div class="deal-bottom"><span class="deal-meta">📅 03 Mar 2026</span></div>
+          <div class="action-row"><button class="action-btn action-confirm">✓ Approve</button><button class="action-btn action-reject">✗ Reject</button></div>
+        </div>
+      </div>
+
+      <div id="tab-completed" class="deal-list" style="display:none;">
+        <div class="deal-card">
+          <div class="deal-top"><span class="deal-id">#JSM-2026-00138</span><span class="badge badge-completed">Completed</span></div>
+          <div class="deal-desc">🧴 FMCG Goods — Ravi K. → Meena J.</div>
+          <div class="deal-amount">₹12,000</div>
+          <div class="deal-bottom"><span class="deal-meta">📅 Completed: 22 Feb 2026</span><a href="#" class="deal-link">View →</a></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="page-footer">© 2026 Jayshakthi Marketing</div>
+
+  <script>
+    function showTab(name, el) {
+      ['all','active','pending','completed'].forEach(t => {
+        document.getElementById('tab-'+t).style.display = 'none';
+      });
+      document.getElementById('tab-'+name).style.display = 'flex';
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      el.classList.add('active');
+    }
+    document.querySelectorAll('.action-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        if(this.classList.contains('action-confirm')) alert('✅ Action confirmed successfully!');
+        else if(this.classList.contains('action-reject')) { if(confirm('Are you sure you want to reject this deal?')) alert('Deal rejected.'); }
+        else alert('Opening deal details...');
+      });
+    });
+  </script>
+</body>
+</html>

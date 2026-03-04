@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Buyer Login - Shopping</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .login-card { max-width: 400px; }
+    .biometric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .bio-btn {
+      background: #fafafa; border: 1.5px solid #e0e0e0; border-radius: 12px;
+      padding: 18px 12px; text-align: center; cursor: pointer; transition: all 0.2s;
+      font-family: inherit; display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .bio-btn:hover { background: #e8eaf6; border-color: #3949ab; transform: translateY(-2px); }
+    .bio-btn .b-icon { font-size: 28px; }
+    .bio-btn .b-label { font-size: 12px; font-weight: 600; color: #555; }
+    .forgot { text-align: right; margin-bottom: 20px; }
+    .forgot a { font-size: 12px; color: #3949ab; text-decoration: none; }
+    .forgot a:hover { text-decoration: underline; }
+    .register-link { text-align: center; margin-top: 16px; font-size: 13px; color: #888; }
+    .register-link a { color: #3949ab; text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">Deals</div>
+      <div>
+        <div class="navbar-title">Shopping Deals</div>
+        <div class="navbar-subtitle">Deal Portal</div>
+      </div>
+    </a>
+    <a href="index.html" class="navbar-back">← Back</a>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="card login-card">
+      <div class="page-title">🛒 Buyer Login</div>
+       <div class="divider"></div>
+      <div class="page-subtitle">Access your buyer portal and manage your deals</div>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>Phone Number / Email</label>
+          <input type="text" placeholder="+91 XXXXX XXXXX or email@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" placeholder="Enter your password" required/>
+        </div>
+        <div class="forgot"><a href="#">Forgot Password?</a></div>
+        <button type="submit" class="btn btn-primary btn-block">Login to Portal →</button>
+      </form>
+
+      <div class="divider-text">Or login with</div>
+
+      <div class="biometric-grid">
+        <button class="bio-btn" onclick="biometricLogin()">
+          <span class="b-icon">👁️</span>
+          <span class="b-label">Face ID</span>
+        </button>
+        <button class="bio-btn" onclick="biometricLogin()">
+          <span class="b-icon">🔏</span>
+          <span class="b-label">Biometric</span>
+        </button>
+      </div>
+
+      <div class="register-link">
+        New user? <a href="#">Contact us to register</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">© 2026 Jayshakthi Marketing</div>
+
+  <script>
+    function handleLogin(e) {
+      e.preventDefault();
+      window.location.href = 'buyer-portal.html';
+    }
+    function biometricLogin() {
+      window.location.href = 'buyer-portal.html';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Refund Form - Shopping</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html" class="navbar-brand">
+      <div class="navbar-logo">Deals</div>
+      <div>
+        <div class="navbar-title">Shopping Deals</div>
+        <div class="navbar-subtitle">Deal Portal</div>
+      </div>
+    </a>
+    <a href="index.html" class="navbar-back">← Back</a>
+  </nav>
+
+  <div class="page-wrapper">
+    <div class="card card-wide">
+      <div class="page-title">↩️ Refund Form</div>
+      <div class="divider"></div>
+      <div class="page-subtitle">Request a refund for an existing order</div>
+
+      <div class="alert alert-warning">
+        <span>⚠️</span>
+        <span>Refund requests are reviewed within 2–3 business days. Ensure your order ID is correct before submitting.</span>
+      </div>
+
+      <form onsubmit="handleSubmit(event)">
+
+        <div class="form-group">
+          <label>Order ID / Deal ID *</label>
+            <input type="text" placeholder="e.g. JSM-2026-00123" required/>
+          
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" placeholder="Enter your full name" required/>
+          </div>
+          <div class="form-group">
+            <label>Mediator *</label>
+            <input type="text" placeholder="Enter your full name" required/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Registered Phone *</label>
+            <input type="tel" placeholder="+91 XXXXX XXXXX" required/>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="text" placeholder="example@mail.com" required/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Order amount *</label>
+            <input type="number" placeholder="0.00" required/>
+          </div>
+          <div class="form-group">
+            <label>Acount Name *</label>
+            <input type="text" placeholder="Enter your acount name" required/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Reason for Refund *</label>
+          <select required>
+            <option value="">Select reason...</option>
+            <option>Product not received</option>
+            <option>Product damaged / defective</option>
+            <option>Deal cancelled by seller</option>
+            <option>Wrong item delivered</option>
+            <option>Quality not as described</option>
+            <option>Duplicate payment</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Detailed Description *</label>
+          <textarea placeholder="Please explain the issue in detail. Include dates, amounts, and any relevant information..." required></textarea>
+        </div>
+
+        <hr class="divider"/>
+        <div style="font-size:13px;font-weight:600;color:#1a237e;margin-bottom:16px;">💳 Refund Bank Details</div>
+
+        <div class="form-group">
+          <label>Account Holder Name *</label>
+          <input type="text" placeholder="Name as on bank account" required/>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bank Account Number *</label>
+            <input type="text" placeholder="Enter account number" required/>
+          </div>
+          <div class="form-group">
+            <label>IFSC Code *</label>
+            <input type="text" placeholder="e.g. SBIN0001234" required/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Bank Name</label>
+            <input type="text" placeholder="e.g. State Bank of India"/>
+          </div>
+          <div class="form-group">
+            <label>UPI ID (optional)</label>
+            <input type="text" placeholder="yourname@upi"/>
+          </div>
+        </div>
+
+        <div class="alert alert-info" style="margin-top:8px;">
+          <span>ℹ️</span>
+          <span>Approved refunds are processed within 5–7 business days to your provided bank account.</span>
+        </div>
+
+        <button type="submit" class="btn btn-orange btn-block">Submit Refund Request →</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="page-footer">© 2026 Jayshakthi Marketing</div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert('✅ Refund request submitted!\n\nYour request will be reviewed within 2–3 business days. We will contact you on your registered phone number.');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
