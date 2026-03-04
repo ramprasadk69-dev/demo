@@ -37,6 +37,10 @@ body {
   line-height: 1.5;
 }
 
+main{
+   background: black;
+}
+
 /* ---- NAVBAR ---- */
 .navbar {
   background: var(--white);
@@ -79,6 +83,7 @@ body {
 .page-wrapper {
   min-height: calc(100vh - 73px);
   display: flex;
+  background: black;
   align-items: center;
   justify-content: center;
   padding: 32px 16px;
