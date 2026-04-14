@@ -137,7 +137,7 @@ label {
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
-input, select, textarea {
+input:not([type="checkbox"]), select, textarea {
   width: 100%;
   padding: 12px 15px;
   border: 1.5px solid var(--border);
@@ -149,6 +149,7 @@ input, select, textarea {
   background: #fafafa;
   color: var(--text);
 }
+
 input:focus, select:focus, textarea:focus {
   border-color: var(--primary-light);
   box-shadow: 0 0 0 3px rgba(57,73,171,0.10);
@@ -200,6 +201,18 @@ textarea { resize: vertical; min-height: 90px; }
 }
 .btn-orange:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(230,81,0,0.30); }
 
+.input {
+  width:100%
+  padding: 12px 15px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+  background: #fafafa;
+  color: var(--text);
+}
 /* ---- DIVIDER ---- */
 .divider { border: none; border-top: 1px solid var(--border); margin: 22px 0; }
 .divider-text {
