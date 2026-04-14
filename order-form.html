@@ -107,7 +107,9 @@
             </option>
           </select>
         </div>
-
+		
+		<div class="divider"></div>
+		<label for="product_code_select">Order Details</label>
         <!-- PRODUCT INFO CARD (shows after selection) -->
         <div class="product-info-box" id="product-info">
           <div class="pi-icon">🛍️</div>
@@ -115,7 +117,7 @@
             <div class="pi-name" id="pi-name">-</div>
             <div class="pi-meta" id="pi-meta">-</div>
           </div>
-        </div>
+        </div> 
 
         <!-- HINT when nothing selected -->
         <div class="select-hint" id="select-hint">
@@ -126,44 +128,29 @@
         <!-- REMAINING FORM (hidden until product selected) -->
         <div id="form-details">
 
-          <div class="form-row">
-            <div class="form-group">
-              <label>Deal Type <span class="required-star">*</span></label>
-              <input type="text" id="deal-deal" placeholder="" min="1" required/>
+        <!--  <div class="form-row"> -->
+		  <div>
+			<div class="form-group">
+              <label>Detail Type <span class="required-star">*</span></label>
+              <input type="text" id="deal-detail" placeholder="" min="1" required/>
             </div>
             <div class="form-group">
               <label>Platform <span class="required-star">*</span></label>
               <input type="text" id="deal-platform" placeholder="" min="1" required/>
             </div>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Buyer Name <span class="required-star">*</span></label>
-              <input type="text" placeholder="Enter full name" required/>
+		  
+		  <div>
+			<div class="form-group">
+              <label>Order Id <span class="required-star">*</span></label>
+              <input type="text" id="deal-orderid" placeholder="" min="1" required/>
             </div>
-            <div class="form-group">
-              <label>Buyer Phone / WhatsApp <span class="required-star">*</span></label>
-              <input type="tel" placeholder="+91 XXXXX XXXXX" required/>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Seller Name <span class="required-star">*</span></label>
-              <input type="text" placeholder="Enter seller's full name" required/>
-            </div>
-            <div class="form-group">
-              <label>Seller Phone / WhatsApp <span class="required-star">*</span></label>
-              <input type="tel" placeholder="+91 XXXXX XXXXX" required/>
+			<div class="form-group">
+              <label>Account Name <span class="required-star">*</span></label>
+              <input type="text" id="deal-accountname" placeholder="" min="1" required/>
             </div>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label>Deal Amount (₹) <span class="required-star">*</span></label>
-              <input type="number" id="deal-amount" placeholder="0.00" min="1" required/>
-            </div>
+		  <div>
             <div class="form-group">
               <label>Order Type <span class="required-star">*</span></label>
               <select required>
@@ -175,40 +162,57 @@
                 <option>Other</option>
               </select>
             </div>
+			<div class="form-group">
+              <label>Deal Type <span class="required-star">*</span></label>
+              <input type="text" id="deal-deal" placeholder="" min="1" required/>
+            </div>
+          </div>
+		  
+		  <div>
+            <div class="form-group">
+              <label>Order Date <span class="required-star">*</span></label>
+              <input type="date"/>
+            </div>
+            <div class="form-group">
+              <label>Order Total <span class="required-star">*</span></label>
+              <input type="text" id="deal-total" placeholder="" min="1" required/>
+            </div>
           </div>
 
-          <div class="form-group">
-            <label>Product / Service Description <span class="required-star">*</span></label>
-            <textarea placeholder="Describe the product or service being traded in detail..." required></textarea>
+          <!--  <div class="form-row"> -->
+		  <div>
+            <div class="form-group">
+              <label>Order ss upload <span class="required-star">*</span></label>
+              <input type="text" placeholder="Enter full name" required/>
+            </div>
+            <div class="form-group">
+              <label>WhatsApp Number<span class="required-star">*</span></label>
+              <input type="tel" placeholder="+91 XXXXX XXXXX" required/>
+            </div>
           </div>
 
-          <div class="form-row">
+          <!--  <div class="form-row"> -->
+		  <div>
             <div class="form-group">
               <label>Mediator Name</label>
               <input type="text" placeholder="Leave blank if none"/>
             </div>
-            <div class="form-group">
-              <label>Expected Delivery Date</label>
-              <input type="date"/>
-            </div>
           </div>
 
-          <div class="form-group">
-            <label>Delivery Address</label>
-            <textarea placeholder="Full delivery address..." style="min-height:70px;"></textarea>
-          </div>
+          
 
           <div class="form-group">
             <label>Additional Notes / Terms</label>
             <textarea placeholder="Any special terms, conditions, or notes for this deal..."></textarea>
           </div>
-
+		
           <div class="alert alert-info">
-            <span>ℹ️</span>
-            <span>After submission, our team will contact you within 24 hours to confirm your order.</span>
+			<input type="checkbox" id="confirm" onchange="toggleButton()"/>
+            <span>I agree to the terms and conditions</span>
           </div>
+		
 
-          <button type="submit" class="btn btn-primary btn-block">Submit Order →</button>
+          <button type="submit" class="btn btn-primary btn-block" id="submitBtn">Submit Order →</button>
 
         </div>
         <!-- end #form-details -->
@@ -229,7 +233,7 @@
       // Show product info card
       document.getElementById('product-info').classList.add('show');
       document.getElementById('pi-name').textContent = selected.text;
-      document.getElementById('pi-meta').textContent =
+ /*     document.getElementById('pi-meta').textContent =
         `Brand: ${selected.dataset.brand}  |  Platform: ${selected.dataset.platform}  |  Deal: ${selected.dataset.deal}  |  Price: ₹${selected.dataset.price}`;
 
       // Pre-fill deal amount
@@ -241,13 +245,19 @@
       }
       if (selected.dataset.platform) {
         document.getElementById('deal-platform').value = selected.dataset.platform;
-      }
+      }  */
 
       // Hide hint, show form
       document.getElementById('select-hint').style.display = 'none';
       document.getElementById('form-details').style.display = 'block';
     }
 
+	function toggleButton() {
+      const checkbox = document.getElementById('confirm');
+      const button = document.getElementById('submitBtn');
+      button.disabled = !checkbox.checked;
+    }
+	
     function handleSubmit(e) {
       e.preventDefault();
       alert('✅ Order submitted successfully!\n\nOur team will contact you within 24 hours to confirm your deal.');
